@@ -6,6 +6,7 @@ import {
     createTechBlog,
     updateTechBlog,
     deleteTechBlog,
+    getTechBlogById,
 } from "../controller/techBlog.controller.js";
 
 const router = express.Router();
@@ -13,8 +14,11 @@ const router = express.Router();
 //all blogs
 router.get("/", getTechBlogs);
 
+//get by id 
+router.get("/:id", getTechBlogById);
+
 //blogs by slus
-router.get("/:slug", getTechBlogBySlug);
+router.get("/slug/:slug", getTechBlogBySlug);
 
 //create 
 router.post("/", createTechBlog);

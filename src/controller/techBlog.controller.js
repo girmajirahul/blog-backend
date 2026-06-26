@@ -5,12 +5,42 @@ import * as techBlogService from "../services/techBlog.services.js";
  */
 export const getTechBlogs = async (req, res) => {
     try {
-        const blogs = await techBlogService.getAllTechBlogs();
+        const page=parseInt(req.query.page) || 1;
+        const limit =parseInt(req.query.limit) || 10;
+
+        const blogs = await techBlogService.getAllTechBlogs(page,limit);
 
         res.status(200).json({
             success: true,
             count: blogs.length,
             data: blogs,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+//get blog by id
+
+export const getTechBlogById = async (req, res) => {
+    try {
+        const blog = await techBlogService.getTechBlogByIdService(
+            req.params.id
+        );
+
+        if (!blog) {
+            return res.status(404).json({
+                success: false,
+                message: "Tech blog not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: blog,
         });
     } catch (error) {
         res.status(500).json({
