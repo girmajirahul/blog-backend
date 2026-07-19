@@ -6,17 +6,20 @@ import {
   createBlog,
   updateBlog,
   deleteBlog,
-  getBlogById
+  getBlogById,
+  getBlogByUser
 }
 from "../controller/blog.controller.js";
 
 const router = express.Router();
 
 router.get("/", getBlogs);
-
+  
 router.get("/:id", getBlogById);
 
 router.get("/slug/:slug", getBlog);
+
+router.get("/users/:id",getBlogByUser)
 
 router.post("/", createBlog);
 

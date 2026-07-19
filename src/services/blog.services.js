@@ -41,6 +41,12 @@ export const getBlogByIdService = async (id) => {
   return await Blog.findById(id);
 };
 
+export const getBlogByUserId=async (id)=>{
+  return await Blog.find({
+    author:id,
+  })
+}
+
 export const createBlog = async (data) => {
   return await Blog.create(data);
 };

@@ -25,6 +25,28 @@ export const getBlog = async (req, res) => {
   });
 };
 
+export const getBlogByUser=async(req,res)=>{
+  try{
+    const blog=await blogService.getBlogByUserId(req.params.id);
+     if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: blog,
+    });
+  }catch(error){
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 export const getBlogById = async (req, res) => {
   try {
     const blog = await blogService.getBlogByIdService(req.params.id);
