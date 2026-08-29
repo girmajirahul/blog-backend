@@ -17,6 +17,7 @@ app.use(cors({
     "http://localhost:3001",
     "http://localhost:5173",  // Vite default
     "http://localhost:4173",  // Vite preview
+    "https://blog-frontend-rahul.vercel.app",
     process.env.FRONTEND_URL, // Vercel URL production mein
   ].filter(Boolean),
   credentials: true,          // ← YEH ADD KARO

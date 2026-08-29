@@ -23,7 +23,7 @@ function sendTokenResponse(res, user, statusCode = 200) {
 // ── POST /api/auth/register ────────────────────────────────────
 export async function register(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password ,role} = req.body;
 
     // Validate required fields
     if (!name || !email || !password) {
@@ -43,7 +43,7 @@ export async function register(req, res) {
     }
 
     // Create user (password hashed in model pre-save hook)
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password ,role });
 
     return sendTokenResponse(res, user, 201);
   } catch (error) {
