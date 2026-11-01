@@ -8,14 +8,24 @@ import {
     updateProfile,
     changePassword,
 } from "../controller/auth.controller.js";
+
+import {
+  githubLogin,
+  githubCallback,
+} from "../controller/github.controller.js";
+
+
 import { protect } from "../services/auth.middleware.js";
 
 const router = express.Router();
 
 // ── Public routes (no token needed) ───────────────────────────
-router.post("/register", register);
+router.post("/register", register); 
 router.post("/login", login);
 router.post("/refresh", refreshAccessToken);
+
+router.get("/github", githubLogin);
+router.get("/github/callback", githubCallback);
 
 // ── Protected routes (token required) ─────────────────────────
 router.get("/me", protect, getMe);
