@@ -7,9 +7,13 @@ import {
   updateBlog,
   deleteBlog,
   getBlogById,
-  getBlogByUser
+  getBlogByUser,
+  importBlogController
 }
 from "../controller/blog.controller.js";
+
+import { uploadBlogFile } from "../services/upload.middleware.js"
+import { protect } from "../services/auth.middleware.js";
 
 const router = express.Router();
 
@@ -26,5 +30,12 @@ router.post("/", createBlog);
 router.put("/:id", updateBlog);
 
 router.delete("/:id", deleteBlog);
+
+router.post(
+    "/import",
+    protect,
+    uploadBlogFile.single("file"),
+    importBlogController
+);
 
 export default router;

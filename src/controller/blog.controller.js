@@ -1,6 +1,9 @@
 import * as blogService
   from "../services/blog.services.js";
 
+import { importBlogService } from "../services/blog.services.js";
+
+
 export const getBlogs = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -101,4 +104,30 @@ export const deleteBlog = async (req, res) => {
     message:
       "Blog deleted successfully"
   });
+};
+
+
+export const importBlogController = async (req, res, next) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload a DOCX or TXT document.",
+            });
+        }
+
+        const blog = await importBlogService(
+            req.file,
+            req.user._id
+        );
+
+        return res.status(201).json({
+            success: true,
+            message: "Blog imported successfully.",
+            data: blog,
+        });
+
+    } catch (error) {
+        next(error);
+    }
 };
