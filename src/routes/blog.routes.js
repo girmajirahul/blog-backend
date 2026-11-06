@@ -8,7 +8,8 @@ import {
   deleteBlog,
   getBlogById,
   getBlogByUser,
-  importBlogController
+  importBlogController,
+  getCommonBlogs
 }
 from "../controller/blog.controller.js";
 
@@ -18,7 +19,8 @@ import { protect } from "../services/auth.middleware.js";
 const router = express.Router();
 
 router.get("/", getBlogs);
-  
+router.get("/commonblogs",getCommonBlogs);
+
 router.get("/:id", getBlogById);
 
 router.get("/slug/:slug", getBlog);
@@ -30,6 +32,7 @@ router.post("/", createBlog);
 router.put("/:id", updateBlog);
 
 router.delete("/:id", deleteBlog);
+
 
 router.post(
     "/import",

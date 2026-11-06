@@ -8,6 +8,7 @@ import {
     deleteTechBlog,
     getTechBlogById,
 } from "../controller/techBlog.controller.js";
+import { protect } from "../services/auth.middleware.js";
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get("/:id", getTechBlogById);
 router.get("/slug/:slug", getTechBlogBySlug);
 
 //create 
-router.post("/", createTechBlog);
+router.post("/", protect, createTechBlog);
 
 //update blogs
 router.put("/:id", updateTechBlog);

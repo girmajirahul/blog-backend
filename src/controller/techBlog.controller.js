@@ -7,8 +7,9 @@ export const getTechBlogs = async (req, res) => {
     try {
         const page=parseInt(req.query.page) || 1;
         const limit =parseInt(req.query.limit) || 10;
+        const userId=req.query.userId ;
 
-        const blogs = await techBlogService.getAllTechBlogs(page,limit);
+        const blogs = await techBlogService.getAllTechBlogs(page,limit,userId);
 
         res.status(200).json({
             success: true,
@@ -83,9 +84,10 @@ export const getTechBlogBySlug = async (req, res) => {
  */
 export const createTechBlog = async (req, res) => {
     try {
-        const blog = await techBlogService.createTechBlog(
-            req.body
-        );
+        const blog = await techBlogService.createTechBlog({
+            ...req.body,
+            author: req.user.id,
+        });
 
         res.status(201).json({
             success: true,

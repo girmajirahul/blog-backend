@@ -28,6 +28,12 @@ const contentBlockSchema = new mongoose.Schema(
 
 const techBlogSchema = new mongoose.Schema(
   {
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     slug: {
       type: String,
       required: true,

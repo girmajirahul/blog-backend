@@ -215,3 +215,58 @@ export async function changePassword(req, res) {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 }
+
+
+export async function setPassword(req, res) {
+  try {
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "New password is required",
+      });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 8 characters",
+      });
+    }
+
+    const user = await User.findById(req.user.id).select("+password");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Prevent replacing an existing password
+    if (user.password) {
+      return res.status(400).json({
+        success: false,
+        message: "Password already exists. Please use change password instead.",
+      });
+    }
+
+    user.password = newPassword;
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Password set successfully",
+    });
+
+  } catch (error) {
+    console.error("SetPassword error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+}

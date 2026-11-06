@@ -159,12 +159,17 @@ const userSchema = new mongoose.Schema(
     // Authentication provider
     authProvider: {
       type: String,
-      enum: ["local", "github"],
+      enum: ["local", "github", "google"],
       default: "local",
     },
 
     // Unique GitHub account ID
     githubId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    googleId: {
       type: String,
       unique: true,
       sparse: true,

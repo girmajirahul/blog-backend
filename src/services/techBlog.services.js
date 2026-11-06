@@ -6,18 +6,19 @@ import TechBlog from "../models/techBlog.model.js";
 // };
 
 
-export const getAllTechBlogs = async (page = 1, limit = 10) => {
+export const getAllTechBlogs = async (page = 1, limit = 10,userId) => {
     const skip = (page - 1) * limit;
+    const filter = userId ? { author: userId } : {};
 
     const [blogs, totalBlogs] = await Promise.all([
-        TechBlog.find().select(
-            "_id slug title excerpt date readingTime tags stack featured difficulty"
+        TechBlog.find(filter).select(
+            "_id slug title excerpt date readingTime tags stack featured difficulty author"
         )
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit),
 
-        TechBlog.countDocuments(),
+        TechBlog.countDocuments(filter),
     ]);
 
 
