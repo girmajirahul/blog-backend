@@ -7,6 +7,7 @@ import {
     updateTechBlog,
     deleteTechBlog,
     getTechBlogById,
+    getBlogByUserId,
 } from "../controller/techBlog.controller.js";
 import { protect } from "../services/auth.middleware.js";
 
@@ -20,6 +21,8 @@ router.get("/:id", getTechBlogById);
 
 //blogs by slus
 router.get("/slug/:slug", getTechBlogBySlug);
+
+router.get('/users/:id',getBlogByUserId)
 
 //create 
 router.post("/", protect, createTechBlog);

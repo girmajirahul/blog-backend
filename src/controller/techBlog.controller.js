@@ -1,3 +1,4 @@
+import techBlogModel from "../models/techBlog.model.js";
 import * as techBlogService from "../services/techBlog.services.js";
 
 /**
@@ -5,11 +6,11 @@ import * as techBlogService from "../services/techBlog.services.js";
  */
 export const getTechBlogs = async (req, res) => {
     try {
-        const page=parseInt(req.query.page) || 1;
-        const limit =parseInt(req.query.limit) || 10;
-        const userId=req.query.userId ;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const userId = req.query.userId;
 
-        const blogs = await techBlogService.getAllTechBlogs(page,limit,userId);
+        const blogs = await techBlogService.getAllTechBlogs(page, limit, userId);
 
         res.status(200).json({
             success: true,
@@ -129,6 +130,30 @@ export const updateTechBlog = async (req, res) => {
         });
     }
 };
+
+export const getBlogByUserId = async (req, res) => {
+    try {
+        const blog = await techBlogModel.find({
+            author:req.params.id
+        });
+        if (!blog) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: blog,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
 
 /**
  * DELETE /api/tech/:id
