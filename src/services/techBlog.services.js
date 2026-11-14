@@ -33,6 +33,34 @@ export const getAllTechBlogs = async (page = 1, limit = 10,userId) => {
     };
 };
 
+// export const getAllTechBlogs = async (page = 1, limit = 10, userId) => {
+//     const skip = (page - 1) * limit;
+//     const filter = userId ? { author: userId } : {};
+
+//     const [blogs, totalBlogs] = await Promise.all([
+//         TechBlog.find(filter)
+//             .select(
+//                 "_id slug title excerpt date readingTime tags stack featured difficulty author"
+//             )
+//             .populate("author", "name email avatar") // Populate author details
+//             .sort({ createdAt: -1 })
+//             .skip(skip)
+//             .limit(limit),
+
+//         TechBlog.countDocuments(filter),
+//     ]);
+
+//     return {
+//         count: blogs.length,
+//         totalBlogs,
+//         currentPage: page,
+//         totalPages: Math.ceil(totalBlogs / limit),
+//         hasNextPage: page < Math.ceil(totalBlogs / limit),
+//         hasPreviousPage: page > 1,
+//         data: blogs,
+//     };
+// };
+
 export const getTechBlogBySlug = async (slug) => {
     return TechBlog.findOne({ slug });
 };

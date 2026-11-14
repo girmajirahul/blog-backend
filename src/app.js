@@ -10,7 +10,7 @@ import blogRoutes from "./routes/blog.routes.js";
 import techBlogRoutes from "./routes/techBlog.routes.js";
 import contactRoutes from "./portfoliocontact/contact.route.js";
 import subscribeRoutes from "./subscribe/subscribe.route.js";
-
+import chatRoutes from "./chat/routes.js";
 const app = express();
 
 const allowedOrigins = [
@@ -57,5 +57,6 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/tech", techBlogRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/subscribe", subscribeRoutes);
+app.use("/api/chat", chatRoutes);
 
 export default app;
