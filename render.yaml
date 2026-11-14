@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: blog-chat-server
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start:socket
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        value: https://blog-frontend-rahul.vercel.app
+      - key: FRONTEND_URLS
+        value: https://girmaji-rahul.vercel.app
